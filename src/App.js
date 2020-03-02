@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Game from './Game';
 
-class App() extends React.Component {
+const names = ["jan", "simon", "jens", "michiel"];
+
+class App extends React.Component {
+
+  handleNameButtonClick = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget.parentElement;
+    const names = [];
+    for(let i = 0; i < 4; i++){
+      names.push(form[i].value);
+    }
+    console.log(names);
+    form.parentElement.innerHTML = `<p></p>`;
+  }
+
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <form>
+      <p>Geef namen in:</p>
+      <label>Speler 1:<input></input></label>
+      <label>Speler 2:<input></input></label>
+      <label>Speler 3:<input></input></label>
+      <label>Speler 4:<input></input></label>
+      <button onClick={this.handleNameButtonClick}>Bevestigen</button>
+      </form>
+
     </div>
   );
+  }
 }
 
 export default App;
