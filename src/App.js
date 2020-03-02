@@ -2,8 +2,6 @@ import React from 'react';
 import './App.css';
 import Game from './Game';
 
-const names = ["jan", "simon", "jens", "michiel"];
-
 class App extends React.Component {
   state = {
     names: ['speler 1', 'speler 2', 'speler 3', 'speler 4']
@@ -11,6 +9,7 @@ class App extends React.Component {
 
   newGameRef = React.createRef();
   formRef = React.createRef();
+  modalRef = React.createRef();
 
   generateGame = (names) => {
     return <Game names={names} />
@@ -18,16 +17,21 @@ class App extends React.Component {
 
   handleNameButtonClick = (e) => {
     e.preventDefault();
-    const form = e.currentTarget.parentElement;
+    const form = e.currentTarget.parentElement.parentElement;
     const names = [];
     for(let i = 0; i < 4; i++){
+      if(form[i].value == '') {
+        names.push(`speler ${i+1}`)
+      } else {
       names.push(form[i].value);
+      }
     }
     this.setState({
       names
     })
     form.hidden = true;
     this.newGameRef.current.hidden = false;
+    this.modalRef.current.hidden = true;
   }
 
   handleNewGameButtonClick = () => {
@@ -37,19 +41,24 @@ class App extends React.Component {
     this.setState({
       names: ['speler 1', 'speler 2', 'speler 3', 'speler 4']
     })
+    this.modalRef.current.hidden = false;
   }
 
   render() {
   return (
     <div className="app">
-      <form ref={this.formRef} className='center'>
-      <p>Geef namen in:</p>
-      <label>Speler 1:<input></input></label><br></br>
-      <label>Speler 2:<input></input></label><br></br>
-      <label>Speler 3:<input></input></label><br></br>
-      <label>Speler 4:<input></input></label><br></br>
-      <button onClick={this.handleNameButtonClick}>Bevestigen</button>
+      <div className='modal' ref={this.modalRef}>
+      <form ref={this.formRef}>
+        <div className='flexModal'>
+          <p>Geef namen in:</p>
+          <label>Speler 1:<input></input></label><br></br>
+          <label>Speler 2:<input></input></label><br></br>
+          <label>Speler 3:<input></input></label><br></br>
+          <label>Speler 4:<input></input></label><br></br>
+          <button onClick={this.handleNameButtonClick}>Bevestigen</button>
+        </div>
       </form>
+      </div>
       <button hidden ref={this.newGameRef} onClick={this.handleNewGameButtonClick} >New Game</button>
       <Game names={this.state.names} />
 

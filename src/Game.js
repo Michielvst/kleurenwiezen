@@ -165,7 +165,7 @@ class Game extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='flexValues'>
         <table className="center">
           <tr>
             {this.renderNames()}
@@ -174,7 +174,7 @@ class Game extends React.Component {
             {this.renderFirstScores()}
           </tr>
         </table> 
-        <div className='center'> 
+        <div> 
           <select ref={this.typeRef} onChange={this.handleTypeChange} className='inputElement'>
             {Object.keys(this.state.types).map(el => 
               <option value={el} >{el}</option>
